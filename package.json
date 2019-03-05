@@ -1,0 +1,25 @@
+{
+  "name": "impersonator",
+  "version": "1.0.0",
+  "description": "A fun little project.",
+  "main": "client.js",
+  "scripts": {
+    "test": "nodemon client.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timothy3773/impersonator.git"
+  },
+  "author": "Jonathan Scott",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Timothy3773/impersonator/issues"
+  },
+  "homepage": "https://github.com/Timothy3773/impersonator#readme",
+  "dependencies": {
+    "common-tags": "^1.8.0",
+    "discord.js": "github:hydrabolt/discord.js",
+    "fs-extra": "^7.0.1",
+    "js-yaml": "^3.12.2"
+  }
+}
