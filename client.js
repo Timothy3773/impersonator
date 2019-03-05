@@ -22,8 +22,7 @@ const config = yaml.safeLoad(fs.readFileSync('./src/config.yml', 'utf8'))
 
 const bot = new discord.Client({
     disableEveryone: true,
-    disabledEvents: ["TYPING_START"],
-    presence: {status: "online", activity: {name: '$help', type: "STREAMING", url: "https://i.kym-cdn.com/entries/icons/original/000/025/526/gnome.jpg"}}
+    disabledEvents: ["TYPING_START"]
 })
 
 /* ******************************* *\
@@ -34,15 +33,33 @@ const bot = new discord.Client({
                                
 \* ******************************* */
 
-bot.on('message', (msg) => {
-    var prefix = config.prefix
 
+var used = false
+
+bot.on('message', async (msg) => {
+    var prefix = config.prefix
+if (used == false){
+    used = true
     if (msg.content.startsWith(prefix + 'impersonate')){
         let user = /\B(\$impersonate.)+(\d+)/gui.exec(msg.content)
         if (user.length > 0){
-            msg.channel.send(bot.users.get(user[2]).tag)
+            var imp = bot.users.get(user[2])
+            if (imp){
+                await bot.user.setUsername(imp.username)
+                await bot.user.setStatus(imp.presence.status)
+                if (imp.presence.activity){
+                    bot.user.setPresence({activity: {name: imp.presence.activity.name, type: imp.presence.activity.url}})
+                }
+                await bot.user.setAvatar(imp.avatarURL())
+            }
         }
     }
+}else if(used == true){
+    setTimeout(() => {
+        used = false
+    }, 60000);
+}
+    
 })
 
 
